@@ -61,7 +61,7 @@ app.use(session({
     password: config.mongodb.password
   })
 }));
-app.use(express.static(path.join(__dirname, 'app/public')));
+app.use(express.static(path.join(__dirname, 'assets')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use(passport.initialize());
 app.use(passport.session());
