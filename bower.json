@@ -1,0 +1,31 @@
+{
+  "name": "node-app",
+  "version": "0.1.0",
+  "homepage": "https://gitlab.com/bentinata/node-app",
+  "private": true,
+  "description": "Base Node App",
+  "contributors": [
+    {
+      "name": "Nurul Arif Setiawan",
+      "email": "arif@dycode.com"
+    },
+    {
+      "name": "Benget Nata",
+      "email": "bentinata@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "datatables": "~1.10.6",
+    "bootstrap": "~3.3.4",
+    "async": "~0.9.2",
+    "lodash": "~3.7.0"
+  }
+}
