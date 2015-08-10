@@ -4,8 +4,7 @@ var winston = require('winston');
 
 var config = require('./config/' + process.env.APPCONFIG);
 
-// various transport
-require('winston-papertrail').Papertrail;
+// you can use winston supported various transport here
 
 var production = (process.env.NODE_ENV || '').toLowerCase() === 'production'
 
@@ -16,13 +15,11 @@ switch((process.env.NODE_ENV || '').toLowerCase()){
   case 'production':
     production = true;
 
-    logger.add(winston.transports.Papertrail, config.papertrail);
-
     logger.add(winston.transports.Console, {
       colorize: true,
       timestamp: true
     });
-    
+
     break;
   case 'test':
     // Don't set up the logger overrides

@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jepret Dashboard v2">
+    <meta name="description" content="Node base app">
     <meta name="author" content="Nurul Arif Setiawan">
-    
+
     <title>{% block title %}{% endblock %}</title>
 
     <link href="/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
@@ -26,7 +26,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Jepret Dashboard</a>
+          <a class="navbar-brand" href="/">Node base app</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -48,9 +48,9 @@
       <hr>
 
       <div class="footer">
-        <p>Jepret Dashboard v.{{version}} &copy; Dycode 2013</p>
+        <p>Node base app v.{{version}} &copy; Infinite Squares 2015</p>
       </div>
-      
+
     </div><!-- /.container -->
 
     <script src="/jquery/dist/jquery.min.js"></script>

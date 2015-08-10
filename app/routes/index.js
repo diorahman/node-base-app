@@ -4,13 +4,14 @@ module.exports = function(app) {
 
   // Before routes
   app.use(function(req, res, next) {
-    
+
     req.locale = req.session.locale || config.i18n.defaultLocale;
 
     // set base model
     res.baseModel = {
       user: req.user,
-      locale: req.locale
+      locale: req.locale,
+      version: version
     }
 
     // set accept
@@ -59,16 +60,12 @@ module.exports = function(app) {
 
     if (err) {
 
-      var showStack = res.showStack || !(err.status === 404 || err.message.indexOf('TTL') < 0)
-
-      if (!err.status) 
-        console.error(err);
-
-      if(err.status) {
-        console.error(err.status, commonErrorMessage[''+err.status], req.originalUrl, showStack ? err.stack : '' );
-      }
-
-      console.error(err.stack);
+      var errSplitted = err.stack.split('\n');
+      console.error({
+        message: errSplitted[0],
+        location: errSplitted[1].trim(),
+        url: req.originalUrl
+      });
 
       var status = err.status || 500;
       res.status(status);
@@ -101,7 +98,7 @@ module.exports = function(app) {
       }
 
     }
-  
+
   });
 
 }
