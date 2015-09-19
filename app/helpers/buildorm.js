@@ -10,8 +10,8 @@ module.exports = function() {
     var connect = function () {
       var options = { 
         server: { socketOptions: { keepAlive: 1 } },
-        user: config.mongodb.username,
-        pass: config.mongodb.password
+        //user: config.mongodb.username,
+        //pass: config.mongodb.password
       };
       mongoose.connect(config.mongodb.connectionUri, options);
     };

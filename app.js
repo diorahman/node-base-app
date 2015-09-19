@@ -42,7 +42,7 @@ app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'swig');
 
 app.disable('x-powered-by');
-//app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -57,8 +57,8 @@ app.use(session({
     host: config.mongodb.host,
     port: config.mongodb.port,
     db: config.mongodb.dbname,
-    username: config.mongodb.username,
-    password: config.mongodb.password
+    //username: config.mongodb.username,
+    //password: config.mongodb.password
   })
 }));
 app.use(express.static(path.join(__dirname, 'assets')));

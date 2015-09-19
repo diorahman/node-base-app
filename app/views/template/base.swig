@@ -30,7 +30,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li>Home</li>
+            <li><a href="#">Home</a></li>
             <!--
             {% for menuItem in menu %}
               <li{% if menuItem.active %} class="active"{% endif %}><a href="{{menuItem.url}}">{{menuItem.displayName}}</a></li>
