@@ -12,18 +12,20 @@ var session    = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
 var i18n = require("i18n");
-
 var MongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
+
+// version
+var version = '0.1.0';
 
 // global
 global.config = require('./config/' + process.env.APPCONFIG);
 global._ = require('lodash');
 global.async = require('async');
+global.ObjectID = require('mongodb').ObjectID;
+global.version = version;
 
 var initialize = require('./app/helpers/initialize')();
-
-// version
-var version = '0.1.0';
 
 // i18n
 i18n.configure({
@@ -46,6 +48,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// initialize
+initialize(function(err, result) {
+
 app.use(session({
   name: 'nodeapp.sess',
   resave: false,
@@ -53,14 +59,17 @@ app.use(session({
   secret: config.cookie.secret,
   auto_reconnect: true,
   maxAge: new Date(Date.now() + 3600000),
+  
   store: new MongoStore({
-    host: config.mongodb.host,
-    port: config.mongodb.port,
-    db: config.mongodb.dbname,
+    mongooseConnection: mongoose.connection
+    //host: config.mongodb.host,
+    //port: config.mongodb.port,
+    //db: config.mongodb.dbname,
     //username: config.mongodb.username,
     //password: config.mongodb.password
   })
 }));
+
 app.use(express.static(path.join(__dirname, 'assets')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use(passport.initialize());
@@ -68,15 +77,8 @@ app.use(passport.session());
 app.use(flash());
 app.use(i18n.init);
 
-// initialize
-initialize(function(err, result) {
-
   // routes
   require('./app/routes')(app);
-
-  // some globals
-  global.ObjectID = require('mongodb').ObjectID;
-  global.version = version;
 
   // start listening
   var port = process.env.PORT || 4002;

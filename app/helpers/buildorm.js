@@ -21,7 +21,13 @@ module.exports = function() {
     mongoose.connection.on('error', function(err) {
       console.error(err);
     });
-    //mongoose.connection.on('disconnected', connect);
+    
+    process.on('SIGINT', function() {  
+      mongoose.connection.close(function () { 
+        console.log('Mongoose default connection disconnected through app termination'); 
+        process.exit(0); 
+      }); 
+    }); 
 
     moduleLoader.loadModels(function(err, models) {
       if (err) {
@@ -31,7 +37,6 @@ module.exports = function() {
 
       // Success
       cb(null, 'models-loaded');
-
     })
   }
 

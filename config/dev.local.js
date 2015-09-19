@@ -5,10 +5,10 @@ module.exports = {
   mongodb: {
     host: 'localhost',
     port: '27017',
-    dbname: 'location',
+    dbname: 'nodeapp',
     username: '',
     password: '',
-    connectionUri: 'mongodb://localhost:27017/location'
+    connectionUri: 'mongodb://localhost:27017/nodeapp'
   },
 
   // dir
