@@ -21,6 +21,7 @@ A [https://nodejs.org/](https://nodejs.org/) web app base template
 # Some exploration on Nodejs
 
 * Location data provider using MongoDB Geospatial
+* [memwatch](https://github.com/marcominetti/node-memwatch) module to find heap allocation. See `memory.js`
 
 # TODO
 

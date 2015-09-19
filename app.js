@@ -1,6 +1,11 @@
 
-require('./logger');
+// uncomment below to generate memory stats using memwatch
+// require('./memory');
 
+// uncomment below to use winston as logger
+// require('./logger');
+
+// node modules
 var path = require('path');
 
 var express = require('express');
@@ -16,7 +21,7 @@ var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 
 // version
-var version = '0.1.0';
+var version = '0.1.3';
 
 // global
 global.config = require('./config/' + process.env.APPCONFIG);
@@ -62,11 +67,6 @@ app.use(session({
   
   store: new MongoStore({
     mongooseConnection: mongoose.connection
-    //host: config.mongodb.host,
-    //port: config.mongodb.port,
-    //db: config.mongodb.dbname,
-    //username: config.mongodb.username,
-    //password: config.mongodb.password
   })
 }));
 

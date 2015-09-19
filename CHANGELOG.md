@@ -1,6 +1,9 @@
 
 19-09-2015
-0.1.1
+0.1.3
+ - Memwatch
+
+0.1.2
  - Remove unused modules
  - Update modules version
 
