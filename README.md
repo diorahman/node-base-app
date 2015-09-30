@@ -1,7 +1,7 @@
 
 # NOTE
 
-For more complete framework, use [Krakenjs](http://krakenjs.com/). It has more features (security, build process).
+For more complete framework, maybe you want to use [Krakenjs](http://krakenjs.com/). It has more features (security, build process).
 
 # Nodejs web app
 
@@ -21,13 +21,12 @@ A [https://nodejs.org/](https://nodejs.org/) web app base template
 # Some exploration on Nodejs
 
 * Location data provider using MongoDB Geospatial
-* [memwatch](https://github.com/marcominetti/node-memwatch) module to find heap allocation. See `memory.js`
+* [memwatch](https://github.com/marcominetti/node-memwatch) module to find heap allocation. See [tools/memory.js](tools/memory.js)
 
 # TODO
 
 * Security
 * Build tools (grunt or gulp)
-* Check for leaks
 * Change swig
 * Test and test
 

@@ -1,9 +1,10 @@
 
-// uncomment below to generate memory stats using memwatch
-// require('./memory');
+// uncomment below to generate memory stats using memwatch, install memwatch first
+// npm install memwatch-next
+// require('./tools/memory');
 
 // uncomment below to use winston as logger
-// require('./logger');
+// require('./tools/logger');
 
 // node modules
 var path = require('path');
@@ -21,7 +22,7 @@ var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 
 // version
-var version = '0.1.3';
+var version = '0.1.4';
 
 // global
 global.config = require('./config/' + process.env.APPCONFIG);
@@ -40,7 +41,7 @@ i18n.configure({
 });
 
 // express setup
-var app = express();
+app = express();
 
 // view engine setup
 swig.setDefaults(config.swig);
@@ -78,7 +79,7 @@ app.use(flash());
 app.use(i18n.init);
 
   // routes
-  require('./app/routes')(app);
+  require('./app/routes')();
 
   // start listening
   var port = process.env.PORT || 4002;

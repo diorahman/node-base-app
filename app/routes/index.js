@@ -1,6 +1,6 @@
 
 
-module.exports = function(app) {
+module.exports = function() {
 
   // Before routes
   app.use(function(req, res, next) {
