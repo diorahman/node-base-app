@@ -63,6 +63,12 @@ require('./tools/memwatch');
 * Change swig
 * Tests and more tests
 
-## Contributions
+# Style Guide
+
+Use [jscs](http://jscs.info/) with [Airbnb](https://github.com/airbnb/javascript) preset as base. See [.jscsrc](.jscsrc). 
+
+Follow guides on jscs on how to setup jscs. Optionally you might want to install jscs plugin on your favorite text editor.
+
+# Contributions
 
 Contributions are welcome

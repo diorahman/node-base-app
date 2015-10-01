@@ -18,7 +18,7 @@ var bodyParser = require('body-parser');
 var session    = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
-var i18n = require("i18n");
+var i18n = require('i18n');
 var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 
@@ -36,9 +36,9 @@ var initialize = require('./app/helpers/initialize')();
 
 // i18n
 i18n.configure({
-  locales: ['en_US', 'id'],
-  directory: __dirname + '/app/locales',
-  updateFiles: false
+    locales: ['en_US', 'id'],
+    directory: __dirname + '/app/locales',
+    updateFiles: false,
 });
 
 // express setup
@@ -59,38 +59,38 @@ app.use(cookieParser());
 // initialize
 initialize(function(err, result) {
 
-app.use(session({
-  name: 'nodeapp.sess',
-  resave: false,
-  saveUninitialized: false,
-  secret: config.cookie.secret,
-  auto_reconnect: true,
-  maxAge: new Date(Date.now() + 3600000),
-  
-  store: new MongoStore({
-    mongooseConnection: mongoose.connection
-  })
-}));
+    app.use(session({
+        name: 'nodeapp.sess',
+        resave: false,
+        saveUninitialized: false,
+        secret: config.cookie.secret,
+        auto_reconnect: true,
+        maxAge: new Date(Date.now() + 3600000),
 
-app.use(express.static(path.join(__dirname, 'assets')));
-app.use(express.static(path.join(__dirname, 'bower_components')));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
-app.use(i18n.init);
+        store: new MongoStore({
+            mongooseConnection: mongoose.connection,
+        }),
+    }));
 
-  // routes
-  require('./app/routes')();
+    app.use(express.static(path.join(__dirname, 'assets')));
+    app.use(express.static(path.join(__dirname, 'bower_components')));
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.use(flash());
+    app.use(i18n.init);
 
-  // start listening
-  var port = process.env.PORT || 4002;
-  var server = app.listen(port, function() {
-    console.log('NodeApp server listening on port ' + port);
-  });
+    // routes
+    require('./app/routes')();
 
-})
+    // start listening
+    var port = process.env.PORT || 4002;
+    var server = app.listen(port, function() {
+        console.log('NodeApp server listening on port ' + port);
+    });
+
+});
 
 // ups
 process.on('uncaughtException', function(err) {
-  console.error('uncaughtException', err.stack);
+    console.error('uncaughtException', err.stack);
 });

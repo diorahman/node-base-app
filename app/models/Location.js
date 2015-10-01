@@ -1,19 +1,19 @@
 
 var mongoose = require('mongoose');
 
-var timestamp = require("./plugins/timestamp");
+var timestamp = require('./plugins/timestamp');
 
 var Schema = mongoose.Schema;
 
 var LocationSchema = new Schema({
-  name: String,
-  location: {
-    'type' : { type: String, default: 'Point' },
-    coordinates: [
-      {type: 'Number'}
-    ]
-  },
-  place: Schema.Types.Mixed
+    name: String,
+    location: {
+        type: { type: String, default: 'Point' },
+        coordinates: [
+          {type: 'Number'},
+        ],
+    },
+    place: Schema.Types.Mixed,
 });
 
 LocationSchema.plugin(timestamp.useTimestamps);
