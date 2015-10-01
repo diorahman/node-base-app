@@ -1,7 +1,7 @@
 
 # NOTE
 
-For more complete framework, maybe you want to use [Krakenjs](http://krakenjs.com/). It has more features (security, build process).
+For more complete framework, maybe you want to use [Krakenjs](http://krakenjs.com/). It has more features (security, build process). Or you can contribute here to add some missing parts.
 
 # Nodejs web app
 
