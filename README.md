@@ -18,17 +18,50 @@ A [https://nodejs.org/](https://nodejs.org/) web app base template
 * `$ bower install`
 * `$ npm start` or `$ ./start`
 
+# Optional modules
+
+### Winston
+
+[Winston](https://github.com/winstonjs/winston) is multi transport async logging. With it, we can connect to various logging back end. 
+
+To use it, install by
+
+```
+npm install winston --save
+``` 
+
+Then uncomment following line in `app.js` (it's located at top)
+
+```
+require('./tools/logger');
+```
+
+### Memwatch
+
+[Memwatch](https://github.com/marcominetti/node-memwatch) is a module that can be used to find potential memory leak by checking heap allocation. See [here](http://blogs.infinitesquares.net/finding-node-js-memory-leak/) for more explanation.
+
+To use it, install by
+
+```
+npm install memwatch-next --save
+``` 
+
+Then uncomment following line in `app.js` (it's located at top)
+
+```
+require('./tools/memwatch');
+```
+
 # Some exploration on Nodejs
 
 * Location data provider using MongoDB Geospatial
-* [memwatch](https://github.com/marcominetti/node-memwatch) module to find heap allocation. See [tools/memory.js](tools/memory.js)
 
 # TODO
 
 * Security
 * Build tools (grunt or gulp)
 * Change swig
-* Test and test
+* Tests and more tests
 
 ## Contributions
 

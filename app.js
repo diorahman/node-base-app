@@ -1,9 +1,10 @@
 
 // uncomment below to generate memory stats using memwatch, install memwatch first
-// npm install memwatch-next
-// require('./tools/memory');
+// npm install memwatch-next --save
+// require('./tools/memwatch');
 
-// uncomment below to use winston as logger
+// uncomment below to use winston as logger, install winston first
+// npm install winston --save
 // require('./tools/logger');
 
 // node modules
