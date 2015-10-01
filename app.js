@@ -23,7 +23,7 @@ var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 
 // version
-var version = '0.1.4';
+var version = '0.1.5';
 
 // global
 global.config = require('./config/' + process.env.APPCONFIG);
