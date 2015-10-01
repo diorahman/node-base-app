@@ -30,8 +30,8 @@ exports.do = function(req, res, next) {
     req.files = req.files || {};
 
     if (!hasBody(req)) return next();
-    if ('GET' == req.method || 'HEAD' == req.method) return next();
-    if ('multipart/form-data' != mime(req)) return next();
+    if (req.method === 'GET' || req.method === 'HEAD') return next();
+    if (mime(req) !== 'multipart/form-data') return next();
 
     req._body = true;
 

@@ -8,19 +8,19 @@ module.exports = function() {
     return function initialize(cb) {
 
         async.auto({
-            load_strategies: function(cb) {
+            loadStrategies: function(cb) {
                 moduleLoader.loadStrategies(cb);
             },
 
-            load_controllers: function(cb) {
+            loadControllers: function(cb) {
                 moduleLoader.loadController(cb);
             },
 
-            load_services: function(cb) {
+            loadServices: function(cb) {
                 moduleLoader.loadServices(cb);
             },
 
-            load_models: function(cb) {
+            loadModels: function(cb) {
                 buildOrm(cb);
             },
         }, cb);

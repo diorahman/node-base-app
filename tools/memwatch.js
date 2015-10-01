@@ -3,6 +3,7 @@
   This will create a file named memstats in CSV format.
 */
 
+var fs = require('fs');
 var memwatch = require('memwatch-next');
 
 memwatch.on('leak', function(info) {
@@ -13,8 +14,7 @@ var filename = 'memstats';
 var firstLine = true;
 
 memwatch.on('stats', function(stats) {
-    var fs = require('fs'),
-        info = [];
+    var info = [];
 
     if (firstLine) {
         info.push('num_full_gc');
@@ -30,14 +30,14 @@ memwatch.on('stats', function(stats) {
         firstLine = false;
     }
 
-    info.push(stats['num_full_gc']);
-    info.push(stats['num_inc_gc']);
-    info.push(stats['heap_compactions']);
-    info.push(stats['usage_trend']);
-    info.push(stats['estimated_base']);
-    info.push(stats['current_base']);
-    info.push(stats['min']);
-    info.push(stats['max']);
+    info.push(stats.num_full_gc);
+    info.push(stats.num_inc_gc);
+    info.push(stats.heap_compactions);
+    info.push(stats.usage_trend);
+    info.push(stats.estimated_base);
+    info.push(stats.current_base);
+    info.push(stats.min);
+    info.push(stats.max);
 
     fs.appendFile(filename, info.join(',') + '\n');
 });

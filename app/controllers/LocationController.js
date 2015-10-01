@@ -72,7 +72,7 @@ module.exports = {
         function attachDistance(reference, places) {
             var placesWithDistance = _.map(places, function(place) {
                 var newPlace = place.toObject();
-                newPlace['distance'] = Geo.getDistance(reference, place.location.coordinates);
+                newPlace.distance = Geo.getDistance(reference, place.location.coordinates);
                 return newPlace;
             });
 

@@ -38,7 +38,7 @@ module.exports = {
 
     // http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects/979325
     // http://jsfiddle.net/gfullam/sq9U7/
-    sort_by: function(field, reverse, primer) {
+    sortBy: function(field, reverse, primer) {
 
         var key = primer ?
           function(x) {return primer(x[field]);} :

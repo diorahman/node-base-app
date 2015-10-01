@@ -20,4 +20,4 @@ LocationSchema.plugin(timestamp.useTimestamps);
 
 LocationSchema.index({ location: '2dsphere', name: 1 });
 
-global['Location'] = mongoose.model('Location', LocationSchema);
+global.Location = mongoose.model('Location', LocationSchema);
