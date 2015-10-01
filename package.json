@@ -27,31 +27,31 @@
   },
   "dependencies": {
     "async": "~1.4.2",
-    "bcryptjs": "~2.2.2",
-    "body-parser": "~1.14.0",
+    "bcryptjs": "~2.3.0",
+    "body-parser": "~1.14.1",
     "connect-flash": "~0.1.1",
     "connect-mongo": "~0.8.2",
     "cookie-parser": "~1.4.0",
     "express": "~4.13.3",
     "express-session": "~1.11.3",
-    "formidable": "~1.0.15",
+    "formidable": "~1.0.17",
     "fs-extra": "^0.24.0",
     "i18n": "~0.5.0",
     "include-all": "~0.1.6",
     "lodash": "~3.10.1",
     "moment": "~2.10.6",
-    "mongodb": "~2.0.43",
-    "mongoose": "~4.1.7",
+    "mongodb": "~2.0.45",
+    "mongoose": "~4.1.9",
     "morgan": "~1.6.1",
-    "nodemailer": "~1.4.0",
-    "nodemailer-html-to-text": "~1.0.0",
+    "nodemailer": "~1.5.0",
+    "nodemailer-html-to-text": "~1.0.2",
     "passport": "~0.3.0",
     "passport-local": "~1.0.0",
     "sails-build-dictionary": "~0.10.1",
     "swig": "~1.4.2"
   },
   "devDependencies": {
-    "chai": "^3.2.0",
-    "mocha": "^2.3.2"
+    "chai": "^3.3.0",
+    "mocha": "^2.3.3"
   }
 }
