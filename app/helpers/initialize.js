@@ -1,26 +1,27 @@
+'use strict';
 
-var passport = require('./passport');
-var moduleLoader = require('./moduleloader');
-var buildOrm = require('./buildorm')();
+const passport = require('./passport');
+const moduleLoader = require('./moduleloader');
+const buildOrm = require('./buildorm')();
 
 module.exports = function() {
 
     return function initialize(cb) {
 
         async.auto({
-            loadStrategies: function(cb) {
+            loadStrategies(cb) {
                 moduleLoader.loadStrategies(cb);
             },
 
-            loadControllers: function(cb) {
+            loadControllers(cb) {
                 moduleLoader.loadController(cb);
             },
 
-            loadServices: function(cb) {
+            loadServices(cb) {
                 moduleLoader.loadServices(cb);
             },
 
-            loadModels: function(cb) {
+            loadModels(cb) {
                 buildOrm(cb);
             },
         }, cb);

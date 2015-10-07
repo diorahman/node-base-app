@@ -1,15 +1,16 @@
+'use strict';
 
-var buildDictionary = require('sails-build-dictionary');
+const buildDictionary = require('sails-build-dictionary');
 
 module.exports = {
 
-    loadController: function(cb) {
+    loadController(cb) {
         buildDictionary.optional({
             dirname: config.appDir + '/app/controllers',
             filter: /^([^.]+)\.(js)$/,
             replaceExpr: /^.*\//,
             flattenDirectories: true,
-        }, function(err, controllers) {
+        }, (err, controllers) => {
             _.each(controllers, function loadControllerToGlobal(controllerDef, controllerId) {
                 global[controllerDef.globalId] = controllerDef;
             });
@@ -18,13 +19,13 @@ module.exports = {
         });
     },
 
-    loadServices: function(cb) {
+    loadServices(cb) {
         buildDictionary.optional({
             dirname: config.appDir + '/app/services',
             filter: /^([^.]+)\.(js)$/,
             replaceExpr: /^.*\//,
             flattenDirectories: true,
-        }, function(err, services) {
+        }, (err, services) => {
             _.each(services, function loadServiceToGlobal(serviceDef, serviceId) {
                 global[serviceDef.globalId] = serviceDef;
             });
@@ -33,7 +34,7 @@ module.exports = {
         });
     },
 
-    loadModels: function(cb) {
+    loadModels(cb) {
         buildDictionary.optional({
             dirname: config.appDir + '/app/models',
             filter: /^([^.]+)\.(js)$/,
@@ -42,7 +43,7 @@ module.exports = {
         }, cb);
     },
 
-    loadStrategies: function(cb) {
+    loadStrategies(cb) {
         buildDictionary.optional({
             dirname: config.appDir + '/app/helpers/strategies',
             filter: /^([^.]+)\.(js)$/,
@@ -51,7 +52,7 @@ module.exports = {
         }, cb);
     },
 
-    loadRoutes: function(cb) {
+    loadRoutes(cb) {
         buildDictionary.optional({
             dirname: config.appDir + '/app/routes',
             filter: /^([^.]+)\.(js)$/,

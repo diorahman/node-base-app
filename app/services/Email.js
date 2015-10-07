@@ -1,14 +1,15 @@
+'use strict';
 
-var path = require('path');
-var fs = require('fs');
+const path = require('path');
+const fs = require('fs');
 
-var nodemailer = require('nodemailer');
-var htmlToText = require('nodemailer-html-to-text').htmlToText;
+const nodemailer = require('nodemailer');
+const htmlToText = require('nodemailer-html-to-text').htmlToText;
 
-var fromEmail = 'NodeApp Team <no-reply@youremail.com>';
+const fromEmail = 'NodeApp Team <no-reply@youremail.com>';
 
 // setup transporter
-var transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     service: config.emailer.service,
     auth: {
         user: config.emailer.user,
@@ -18,7 +19,7 @@ var transporter = nodemailer.createTransport({
 transporter.use('compile', htmlToText());
 
 // supported email templates
-var emailTypes = {
+const emailTypes = {
 
     /*
       data: {
@@ -33,8 +34,8 @@ var emailTypes = {
     emailVerification: {
         file: 'email_verification.html',
         subject: 'NodeApp email verification',
-        replacer: function(body, data) {
-            var emailBody = body.
+        replacer(body, data) {
+            const emailBody = body.
             replace('{FIRSTNAME}', data.firstName).
             replace('{LASTNAME}', data.lastName).
             replace('{VERIFICATIONLINK}', data.verificationLink).
@@ -46,42 +47,42 @@ var emailTypes = {
 
 module.exports = {
 
-    send: function(type, data, cb) {
+    send(type, data, cb) {
 
         // only process supported type
-        var emailTypeData = emailTypes[type];
+        const emailTypeData = emailTypes[type];
 
         if (emailTypeData) {
 
-            var filePath = __dirname + '/emails/' + emailTypeData.file;
-            fs.readFile(filePath, function(err, emailBodyMd) {
+            const filePath = __dirname + '/emails/' + emailTypeData.file;
+            fs.readFile(filePath, (err, emailBodyMd) => {
                 if (err) {
                     console.error(err);
-                }                else {
-                    var emailBody = emailBodyMd.toString();
+                } else {
+                    let emailBody = emailBodyMd.toString();
                     emailBody = emailTypeData.replacer(emailBody, data);
 
-                    var mailOptions = {
+                    const mailOptions = {
                         from: fromEmail,
                         to: data.email,
                         subject: emailTypeData.subject,
                         html: emailBody,
                     };
 
-                    transporter.sendMail(mailOptions, function(err, info) {
+                    transporter.sendMail(mailOptions, (err, info) => {
                         if (err) {
                             console.error(err);
                             cb(err);
-                        }                        else {
-                            console.log('Email with type ' + type + ' is sent: ' + info.response, JSON.stringify(data));
+                        } else {
+                            console.log(`Email with type ${type} is sent: ${info.response}`, JSON.stringify(data));
                             cb(null, info);
                         }
                     });
                 }
             });
 
-        }        else {
-            console.error('Email with type ' + type + ' is not supported');
+        } else {
+            console.error(`Email with type ${type} is not supported`);
         }
 
     },

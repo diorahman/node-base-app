@@ -1,9 +1,10 @@
+'use strict';
 
 module.exports = {
 
-    hasProperty: function(objects, props) {
-        var has = true;
-        for (var i = 0; i < props.length; i++) {
+    hasProperty(objects, props) {
+        let has = true;
+        for (let i = 0, l = props.length; i < l; i++) {
             if (!objects.hasOwnProperty(props[i])) {
                 has = false;
                 break;
@@ -38,24 +39,22 @@ module.exports = {
 
     // http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects/979325
     // http://jsfiddle.net/gfullam/sq9U7/
-    sortBy: function(field, reverse, primer) {
+    sortBy(field, reverse, primer) {
 
-        var key = primer ?
-          function(x) {return primer(x[field]);} :
-
-          function(x) {return x[field];};
+        const key = primer ? x => primer(x[field])
+                         : x => x[field];
 
         reverse = [-1, 1][+!!reverse];
 
-        return function(a, b) {
+        return (a, b) => {
             return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
         };
     },
 
-    zeroPad: function(num, numZeros) {
-        var n = Math.abs(num);
-        var zeros = Math.max(0, numZeros - Math.floor(n).toString().length);
-        var zeroString = Math.pow(10, zeros).toString().substr(1);
+    zeroPad(num, numZeros) {
+        const n = Math.abs(num);
+        const zeros = Math.max(0, numZeros - Math.floor(n).toString().length);
+        let zeroString = Math.pow(10, zeros).toString().substr(1);
         if (num < 0) {
             zeroString = '-' + zeroString;
         }
@@ -63,13 +62,12 @@ module.exports = {
         return zeroString + n;
     },
 
-    randomString: function(bits) {
-
-        var chars =
+    randomString(bits) {
+        const chars =
           'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ab';
-        var rand;
-        var i;
-        var randomizedString = '';
+        let rand;
+        let i;
+        let randomizedString = '';
 
         // in v8, Math.random() yields 32 pseudo-random bits (in spidermonkey
         // it gives 53)
@@ -87,28 +85,28 @@ module.exports = {
         return randomizedString;
     },
 
-    uid: function(len) {
-        var buf = [];
-        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        var charlen = chars.length;
+    uid(len) {
+        const buf = [];
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const charlen = chars.length;
 
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        for (var i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             buf.push(chars[getRandomInt(0, charlen - 1)]);
         }
 
         return buf.join('');
     },
 
-    getRandomNumbers: function(length) {
-        var arr = [];
+    getRandomNumbers(length) {
+        const arr = [];
         while (arr.length < length) {
-            var randomnumber = Math.ceil(Math.random() * length - 1);
-            var found = false;
-            for (var i = 0; i < arr.length; i++) {
+            const randomnumber = Math.ceil(Math.random() * length - 1);
+            let found = false;
+            for (let i = 0, l = arr.length; i < l; i++) {
                 if (arr[i] == randomnumber) {
                     found = true;break;
                 }
@@ -120,10 +118,10 @@ module.exports = {
         return arr;
     },
 
-    stringifyWithOrder: function(json, order) {
-        var keys = Object.keys(json);
-        var orderKeys = [];
-        for (var i = 0; i < order.length; i++) {
+    stringifyWithOrder(json, order) {
+        const keys = Object.keys(json);
+        const orderKeys = [];
+        for (let i = 0, l = order.length; i < l; i++) {
             orderKeys.push(keys[order[i]]);
         }
 

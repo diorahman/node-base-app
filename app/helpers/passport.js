@@ -1,12 +1,13 @@
+'use strict';
 
-var passport = require('passport');
+const passport = require('passport');
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-    User.findOneById(id).exec(function(err, user) {
+passport.deserializeUser((id, done) => {
+    User.findOneById(id).exec((err, user) => {
         if (user) {
             delete user.password;
             done(null, user);

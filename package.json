@@ -44,18 +44,26 @@
     "include-all": "~0.1.6",
     "lodash": "~3.10.1",
     "moment": "~2.10.6",
-    "mongodb": "~2.0.46",
-    "mongoose": "~4.1.12",
+    "mongodb": "~2.0.45",
+    "mongoose": "~4.1.10",
     "morgan": "~1.6.1",
-    "nodemailer": "~1.8.0",
+    "nodemailer": "~1.7.0",
     "nodemailer-html-to-text": "~1.0.2",
     "passport": "~0.3.0",
+    "mkdirp": "~0.5.1",
     "passport-local": "~1.0.0",
+    "request": "~2.64.0",
     "sails-build-dictionary": "~0.10.1",
-    "swig": "~1.4.2"
+    "superagent": "~1.4.0",
+    "swig": "~1.4.2",
+    "winston": "~1.0.0"
   },
   "devDependencies": {
     "chai": "^3.3.0",
-    "mocha": "^2.3.3"
+    "colors": "^1.1.2",
+    "memwatch-next": "^0.2.9",
+    "mocha": "^2.3.3",
+    "tracer": "^0.8.0",
+    "winston": "^1.0.2"
   }
 }
