@@ -1,5 +1,5 @@
 #!/bin/sh
 
-export ALCONFIG=dev.local
+export APPCONFIG=dev.local
 
 nodemon --ext ".js|.css|.html" app.js

@@ -1,3 +1,5 @@
+.idea
 .tmp
 .git
-app/public
+assets/public
+memstats

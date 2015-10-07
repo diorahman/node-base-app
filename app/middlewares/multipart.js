@@ -1,67 +1,70 @@
+'use strict';
 
-var fs = require('fs');
-var util = require('util');
-var mkdirp = require('mkdirp');
+/*
+  Multipart request handling with formidable
+  uploaded files will be stored in config.uploadDir
+  By default, files are kept
+  By setting req.removeFile somewhere in request handler,
+  file will be removed when request end
+*/
 
-if (!fs.existsSync(config.photoDir)) 
-  mkdirp.sync(config.photoDir);
+const fs = require('fs-extra');
 
-var formidable = require('formidable');
+if (!fs.existsSync(config.uploadDir))
+  fs.mkdirsSync(config.uploadDir);
+
+const formidable = require('formidable');
 
 function hasBody(req) {
-  return 'transfer-encoding' in req.headers || 'content-length' in req.headers;
+    return 'transfer-encoding' in req.headers || 'content-length' in req.headers;
 };
 
 function mime(req) {
-  var str = req.headers['content-type'] || '';
-  return str.split(';')[0];
+    const str = req.headers['content-type'] || '';
+    return str.split(';')[0];
 };
 
-exports.do = function(req, res, next) {
+exports.do = (req, res, next) => {
 
-  if (req._body) return next();
-  req.body = req.body || {};
-  req.files = req.files || {};
+    if (req._body) return next();
+    req.body = req.body || {};
+    req.files = req.files || {};
 
-  if (!hasBody(req)) return next();
-  if ('GET' == req.method || 'HEAD' == req.method) return next();
-  if ('multipart/form-data' != mime(req)) return next();
+    if (!hasBody(req)) return next();
+    if (req.method === 'GET' || req.method === 'HEAD') return next();
+    if (mime(req) !== 'multipart/form-data') return next();
 
-  req._body = true;
+    req._body = true;
 
-  var form = new formidable.IncomingForm({ 
-    keepExtensions: true, 
-    uploadDir: config.photoDir, 
-    multiples: true,
-    maxFieldsSize: 10 * 1024 * 1024 
-  });
+    const form = new formidable.IncomingForm({
+        keepExtensions: true,
+        uploadDir: config.uploadDir,
+        multiples: true,
+        maxFieldsSize: 10 * 1024 * 1024,
+    });
 
-  form.parse(req, function(err, fields, files) { 
-    if (err) {
-      return next(err);
-    }
+    form.parse(req, (err, fields, files) => {
+        if (err) return next(err);
 
-    req.body = fields;
-    req.files = files;
-    next();
-  });
+        req.body = fields;
+        req.files = files;
+        next();
+    });
 
-  var end = res.end;
-  res.end = function(chunk, encoding){
-    res.end = end;
-    res.end(chunk, encoding);
+    const end = res.end;
+    res.end = (chunk, encoding) => {
+        res.end = end;
+        res.end(chunk, encoding);
 
-    // if we want it
-    if (!(req.keepFile && req.keepFile === true)) {
-      // delete temp when done
-      if (req.files) {
-        for (file in req.files) {
-          var fileData = req.files[file];
-          //console.log('Delete file', fileData.path);
-          if (fs.existsSync(fileData.path))
-            fs.unlinkSync(fileData.path);
+        // if we want it, delete it
+        if (req.removeFile && req.removeFile === true) {
+            if (req.files) {
+                for (file in req.files) {
+                    const fileData = req.files[file];
+                    if (fs.existsSync(fileData.path))
+                      fs.unlinkSync(fileData.path);
+                }
+            }
         }
-      }
-    }
-  };
-}
+    };
+};

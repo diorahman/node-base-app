@@ -1,27 +1,30 @@
 
 var passport = require('./passport');
 var moduleLoader = require('./moduleloader');
-var buildOrm = require('./buildorm')();  
+var buildOrm = require('./buildorm')();
 
-module.exports = function () {
-  
-  return function initialize(cb) {
-    
-    async.auto({
-      load_strategies: function(cb){
-        moduleLoader.loadStrategies(cb);
-      },
-      load_controllers: function(cb){
-        moduleLoader.loadController(cb);
-      },
-      load_services: function(cb){
-        moduleLoader.loadServices(cb);
-      },
-      load_models: function(cb){
-        buildOrm(cb);
-      }
-    }, cb);
+module.exports = function() {
 
-  }
+    return function initialize(cb) {
 
-}
+        async.auto({
+            loadStrategies: function(cb) {
+                moduleLoader.loadStrategies(cb);
+            },
+
+            loadControllers: function(cb) {
+                moduleLoader.loadController(cb);
+            },
+
+            loadServices: function(cb) {
+                moduleLoader.loadServices(cb);
+            },
+
+            loadModels: function(cb) {
+                buildOrm(cb);
+            },
+        }, cb);
+
+    };
+
+};

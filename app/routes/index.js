@@ -1,106 +1,88 @@
+'use strict';
 
+const http = require('http');
 
-module.exports = function(app) {
+module.exports = () => {
 
-  // Before routes
-  app.use(function(req, res, next) {
+    // Before routes
+    app.use((req, res, next) => {
 
-    req.locale = req.session.locale || config.i18n.defaultLocale;
+        req.locale = req.session.locale || config.i18n.defaultLocale;
 
-    // set base model
-    res.baseModel = {
-      user: req.user,
-      locale: req.locale
-    }
+        // set base model
+        res.baseModel = {
+            user: req.user,
+            locale: req.locale,
+            version: version,
+        };
 
-    // set accept
-    var accept = req.get('Accept') || '';
-    req.explicitlyAcceptsHTML = (accept.indexOf('html') !== -1);
-    req.wantsJSON = req.xhr;
-    req.wantsJSON = req.wantsJSON || !req.explicitlyAcceptsHTML;
+        // set accept
+        req.wantsJSON = req.xhr || req.get('Accept').indexOf('html') < 0;
 
-    // send ok
-    res.ok = function(data, message, status) {
-      res.send({
-        meta: {
-          status: 'OK',
-          code: status || 200,
-          message: message,
-        },
-        data: data
-      })
-    }
+        // craft response
+        res.craft = (data, message, status) => {
+            const response = {
+                meta: {
+                    status: http.STATUS_CODES[status],
+                    code: status,
+                },
+            };
 
-    next();
-  });
+            if (message) response.meta.message = message;
+            if (data != null) response.data = data;
 
-  // routes
-  app.use('/', require('./web'));
-  app.use('/api', require('./api'))
-  app.use('/test', require('./test'));
+            return response;
+        };
 
-  // 404 handler
-  app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-  });
+        // send crafted response
+        res.ok = (data, message, status) => {
+            status = status || 200;
 
-  var commonErrorMessage = {
-    '400': 'Bad Request',
-    '403': 'Forbidden',
-    '404': 'Not Found',
-    '500': 'Internal Error'
-  }
+            res.status(status).send(res.craft(data, message, status));
+        };
 
-  // error handler
-  app.use(function(err, req, res, next) {
+        next();
+    });
 
-    if (err) {
+    // routes
+    app.use('/', require('./web'));
+    app.use('/api', require('./api'));
+    app.use('/api/location', require('./location'));
+    app.use('/test', require('./test'));
 
-      var showStack = res.showStack || !(err.status === 404 || err.message.indexOf('TTL') < 0)
+    // 404 handler
+    app.use((req, res, next) => {
+        const err = new Error('Not Found');
+        err.status = 404;
+        next(err);
+    });
 
-      if (!err.status)
-        console.error(err);
+    // error handler
+    app.use((err, req, res, next) => {
 
-      if(err.status) {
-        console.error(err.status, commonErrorMessage[''+err.status], req.originalUrl, showStack ? err.stack : '' );
-      }
+        const errSplitted = err.stack.split('\n');
 
-      console.error(err.stack);
-
-      var status = err.status || 500;
-      res.status(status);
-
-      var meta = {
-        status: 'Error',
-        code: status,
-        message: err.message || commonErrorMessage['' + status]
-      }
-
-      if (err.message === 'Invalid login data') {
-        req.logout();
-        return res.redirect('/signin');
-      }
-
-      if (req.wantsJSON) {
-        return res.send({
-          meta: meta,
-          data: err.data
+        console.error({
+            message: errSplitted[0],
+            location: errSplitted[1].trim(),
+            url: req.originalUrl,
         });
-      }
-      else {
-        var model = {
-          meta: meta,
-          data: err.data,
-          locale: req.locale,
-          user: req.user
+
+        if (err.message === 'Invalid login data') {
+            req.logout();
+            return res.redirect('/');
         }
-        return res.render('errors/error', model);
-      }
 
-    }
+        const status = err.status || 500;
 
-  });
+        if (req.wantsJSON) {
+            return res.ok(err.data, err.message, status);
+        } else {
+            const model = res.baseModel;
+            Object.assign(model, res.craft(err.data, err.message, status));
+            return res.render('errors/error', model);
+        };
 
-}
+    });
+
+};
