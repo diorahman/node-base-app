@@ -1,3 +1,7 @@
+06-10-2015
+0.1.5
+ - NodeJS ES6 features
+ - Also fix logger bug
 
 19-09-2015
 0.1.4
