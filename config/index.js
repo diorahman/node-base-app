@@ -17,7 +17,7 @@ module.exports = {
     mongodb: {
         host: 'localhost',
         port: '27017',
-        dbname: 'nodeapp',
+        dbname: 'foodgasm',
         username: '',
         password: '',
         get connectionUri() {
@@ -47,7 +47,7 @@ module.exports = {
     },
 
     cookie: {
-        secret: 'tacocat',
+        secret: 'neveroddoreven',
     },
 
 };

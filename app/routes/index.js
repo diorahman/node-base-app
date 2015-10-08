@@ -23,12 +23,11 @@ module.exports = () => {
         res.craft = (data, message, status) => {
             const response = {
                 meta: {
-                    status: http.STATUS_CODES[status],
                     code: status,
+                    message: message || http.STATUS_CODES[status],
                 },
             };
 
-            if (message) response.meta.message = message;
             if (data != null) response.data = data;
 
             return response;
@@ -64,7 +63,10 @@ module.exports = () => {
 
         console.error({
             message: errSplitted[0],
-            location: errSplitted[1].trim(),
+            location: errSplitted[1]
+                        .replace(config.appDir, '')
+                        .replace(/\\/g, '/')
+                        .trim(),
             url: req.originalUrl,
         });
 

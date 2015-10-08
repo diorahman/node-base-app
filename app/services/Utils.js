@@ -14,6 +14,20 @@ module.exports = {
         return has;
     },
 
+    /**
+     * Reverse of hasProperty, nice to craft message of what's missing.
+     * @param  object obj   Checked objects.
+     * @param  array props  Array of checked object key.
+     * @return string       Missing object key name.
+     */
+    missingProperty(obj, props) {
+        for (let i = 0, l = props.length; i < l; i++) {
+            if (!obj.hasOwnProperty(props[i])) return props[i];
+        }
+
+        return false;
+    },
+
     /*
     function test() {
       var a = [

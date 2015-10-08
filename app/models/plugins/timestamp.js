@@ -1,5 +1,5 @@
 
-exports.useTimestamps = (schema, options) => {
+module.exports = (schema, options) => {
     schema.add({
         ts: Date,
         tu: Date,
