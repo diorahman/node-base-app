@@ -7,8 +7,6 @@ var multipart = require('../middlewares/multipart');
 var base64image = require('../middlewares/base64image');
 
 // Index
-router.get('/', (req, res, next) => {
-  res.ok(0, 'Somebody', 203)
-});
+router.get('/', IndexController.index);
 
 module.exports = router;

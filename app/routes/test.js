@@ -10,6 +10,10 @@ router.get('/', function(req, res, next) {
     res.ok('This is just a test');
 });
 
+router.get('/ok', (req, res, next) => {
+    res.ok(0, 'Somebody', 203);
+});
+
 router.get('/error', function(req, res, next) {
     var err = new Error('Hey, you requested it');
     err.status = 400;

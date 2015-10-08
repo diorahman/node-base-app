@@ -48,7 +48,7 @@
       <hr>
 
       <div class="footer">
-        <p>Node base app v.{{version}} &copy; Infinite Squares 2015</p>
+        <p>Node base app v.{{version}} &copy; Dycode 2015</p>
       </div>
 
     </div><!-- /.container -->
