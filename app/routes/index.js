@@ -21,6 +21,8 @@ module.exports = () => {
 
         // craft response
         res.craft = (data, message, status) => {
+            status = status || 200;
+
             const response = {
                 meta: {
                     code: status,
@@ -46,7 +48,6 @@ module.exports = () => {
     // routes
     app.use('/', require('./web'));
     app.use('/api', require('./api'));
-    app.use('/api/location', require('./location'));
     app.use('/test', require('./test'));
 
     // 404 handler

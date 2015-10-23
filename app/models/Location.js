@@ -16,7 +16,7 @@ var LocationSchema = new Schema({
     place: Schema.Types.Mixed,
 });
 
-LocationSchema.plugin(timestamp.useTimestamps);
+LocationSchema.plugin(timestamp);
 
 LocationSchema.index({ location: '2dsphere', name: 1 });
 
