@@ -8,18 +8,9 @@ module.exports = () => {
     app.use((req, res, next) => {
 
         req.locale = req.session.locale || config.i18n.defaultLocale;
+        req.api = req.xhr || req.get('Accept').indexOf('html') < 0;
 
-        // set base model
-        res.baseModel = {
-            user: req.user,
-            locale: req.locale,
-            version: version,
-        };
-
-        // set accept
-        req.wantsJSON = req.xhr || req.get('Accept').indexOf('html') < 0;
-
-        // craft response
+        // Craft response.
         res.craft = (data, message, status) => {
             status = status || 200;
 
@@ -35,12 +26,20 @@ module.exports = () => {
             return response;
         };
 
-        // send crafted response
         res.ok = (data, message, status) => {
             status = status || 200;
 
             res.status(status).send(res.craft(data, message, status));
         };
+
+        // Base model only if request is not API.
+        if (!req.api) {
+            res.model = {
+                user: req.user,
+                locale: req.locale,
+                version: version,
+            };
+        }
 
         next();
     });
@@ -78,10 +77,10 @@ module.exports = () => {
 
         const status = err.status || 500;
 
-        if (req.wantsJSON) {
+        if (req.api) {
             return res.ok(err.data, err.message, status);
         } else {
-            const model = res.baseModel;
+            const model = res.model;
             Object.assign(model, res.craft(err.data, err.message, status));
             return res.render('errors/error', model);
         };
