@@ -5,7 +5,7 @@ const http = require('http');
 module.exports = () => {
 
     // Craft response.
-    const craft = (data, message, status) => {
+    function craft(data, message, status) {
         status = status || 200;
 
         const response = {
