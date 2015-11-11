@@ -20,12 +20,6 @@ module.exports = () => {
         return response;
     };
 
-    const ok = (data, message, status) => {
-        status = status || 200;
-
-        res.status(status).send(res.craft(data, message, status));
-    };
-
     // Before routes
     app.use((req, res, next) => {
         req.locale = req.session.locale || config.i18n.defaultLocale;
@@ -41,7 +35,12 @@ module.exports = () => {
         }
 
         res.craft = craft;
-        res.ok = ok;
+
+        res.ok = (data, message, status) => {
+            status = status || 200;
+
+            res.status(status).send(craft(data, message, status));
+        };
 
         next();
     });
@@ -78,7 +77,7 @@ module.exports = () => {
         const status = err.status || 500;
 
         if (req.api) {
-            return ok(err.data, err.message, status);
+            return res.status(status).send(craft(err.data, err.message, status));
         } else {
             const model = Object.assign({}, res.model, craft(err.data, err.message, status));
             return res.render('errors/error', model);
