@@ -4,33 +4,32 @@ const http = require('http');
 
 module.exports = () => {
 
+    // Craft response.
+    const craft = (data, message, status) => {
+        status = status || 200;
+
+        const response = {
+            meta: {
+                code: status,
+                message: message || http.STATUS_CODES[status],
+            },
+        };
+
+        if (data != null) response.data = data;
+
+        return response;
+    };
+
+    const ok = (data, message, status) => {
+        status = status || 200;
+
+        res.status(status).send(res.craft(data, message, status));
+    };
+
     // Before routes
     app.use((req, res, next) => {
-
         req.locale = req.session.locale || config.i18n.defaultLocale;
         req.api = req.xhr || req.get('Accept').indexOf('html') < 0;
-
-        // Craft response.
-        res.craft = (data, message, status) => {
-            status = status || 200;
-
-            const response = {
-                meta: {
-                    code: status,
-                    message: message || http.STATUS_CODES[status],
-                },
-            };
-
-            if (data != null) response.data = data;
-
-            return response;
-        };
-
-        res.ok = (data, message, status) => {
-            status = status || 200;
-
-            res.status(status).send(res.craft(data, message, status));
-        };
 
         // Base model only if request is not API.
         if (!req.api) {
@@ -41,12 +40,15 @@ module.exports = () => {
             };
         }
 
+        res.craft = craft;
+        res.ok = ok;
+
         next();
     });
 
     // routes
     app.use('/', require('./web'));
-    app.use('/api', require('./api'));
+    app.use('/api/v1', require('./api'));
     app.use('/test', require('./test'));
 
     // 404 handler
@@ -58,9 +60,7 @@ module.exports = () => {
 
     // error handler
     app.use((err, req, res, next) => {
-
         const errSplitted = err.stack.split('\n');
-
         console.error({
             message: errSplitted[0],
             location: errSplitted[1]
@@ -78,10 +78,9 @@ module.exports = () => {
         const status = err.status || 500;
 
         if (req.api) {
-            return res.ok(err.data, err.message, status);
+            return ok(err.data, err.message, status);
         } else {
-            const model = res.model;
-            Object.assign(model, res.craft(err.data, err.message, status));
+            const model = Object.assign({}, res.model, craft(err.data, err.message, status));
             return res.render('errors/error', model);
         };
 
